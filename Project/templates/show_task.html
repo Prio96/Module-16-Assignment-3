@@ -1,6 +1,32 @@
 {% extends 'base.html' %}
-
+<!-- Task_Title, Task_Description, Is_Completed, Categories, Task_Assign_Date -->
+<!-- Category_name -->
 {% block content %}
-
+<div class="row d-flex justify-content-center">
+    {% for task in TaskList %}
+    <div class="col-3 m-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <p class="card-title">{{task.id}}</p>
+                <p class="card-text">{{task.Task_Assign_Date}}</p>
+                <p class="card-text">{{task.Task_Description}}</p>
+                <p class="card-text">Categories:
+                    {% for category in task.Categories.all %}
+                    <button class="btn btn-sm btn-primary">{{category.Category_name}}</button>
+                    {% endfor %}
+                </p>
+                <p>
+                    {% if task.Is_Completed == False %}
+                    <a href="{% url 'EditTask' task.id %}" class="btn btn-warning">Edit</a>
+                    <a href="{% url 'DeleteTask' task.id %}" class="btn btn-danger">Delete</a>
+                    {% else %}
+                    <button class="btn btn-success" type="button">Completed</button>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 
 {% endblock content %}
